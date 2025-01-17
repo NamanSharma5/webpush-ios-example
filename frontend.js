@@ -1,23 +1,28 @@
 async function initServiceWorker() {
-    let swRegistration = await navigator.serviceWorker.register('https://andreinwald.github.io/webpush-ios-example/serviceworker.js', {scope: '/webpush-ios-example/'})
-    let pushManager = swRegistration.pushManager;
+    try{
+        let swRegistration = await navigator.serviceWorker.register('/serviceworker.js', {scope: '/webpush-ios-example/'})
+        let pushManager = swRegistration.pushManager;
 
-    if (!isPushManagerActive(pushManager)) {
-        return;
+        if (!isPushManagerActive(pushManager)) {
+            return;
+        }
+
+        let permissionState = await pushManager.permissionState({userVisibleOnly: true});
+        switch (permissionState) {
+            case 'prompt':
+                document.getElementById('subscribe_btn').style.display = 'block';
+                break;
+            case 'granted':
+                displaySubscriptionInfo(await pushManager.getSubscription())
+                break;
+            case 'denied':
+                document.getElementById('subscribe_btn').style.display = 'none';
+                document.getElementById('active_sub').style.display = 'block';
+                document.getElementById('active_sub').innerHTML = 'User denied push permission';
+        }
     }
-
-    let permissionState = await pushManager.permissionState({userVisibleOnly: true});
-    switch (permissionState) {
-        case 'prompt':
-            document.getElementById('subscribe_btn').style.display = 'block';
-            break;
-        case 'granted':
-            displaySubscriptionInfo(await pushManager.getSubscription())
-            break;
-        case 'denied':
-            document.getElementById('subscribe_btn').style.display = 'none';
-            document.getElementById('active_sub').style.display = 'block';
-            document.getElementById('active_sub').innerHTML = 'User denied push permission';
+    catch (error) {
+        alert('Service worker registration failed: ' + error);
     }
 }
 
