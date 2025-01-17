@@ -1,6 +1,7 @@
 async function initServiceWorker() {
     try{
-        let swRegistration = await navigator.serviceWorker.register('/serviceworker.js', {scope: '/webpush-ios-example/'})
+        // let swRegistration = await navigator.serviceWorker.register('/serviceworker.js', {scope: '/webpush-ios-example/'})
+        let swRegistration = await navigator.serviceWorker.register('https://andreinwald.github.io/webpush-ios-example/serviceworker.js', {scope: '/webpush-ios-example/'})
         let pushManager = swRegistration.pushManager;
 
         if (!isPushManagerActive(pushManager)) {
@@ -37,6 +38,15 @@ function isPushManagerActive(pushManager) {
         return false;
     } else {
         return true;
+    }
+}
+
+function isStandAlone(){
+    if (!window.navigator.standalone) {
+        document.getElementById('add-to-home-screen').style.display = 'block';
+        console.log('not standalone')
+    } else {
+      alert('standalone')
     }
 }
 
@@ -93,5 +103,8 @@ if ((new URLSearchParams(window.location.search)).get('page') === 'success') {
 }
 
 if (navigator.serviceWorker) {
-    initServiceWorker();
+    console.log('Service worker supported');
+    isStandAlone();
+    // initServiceWorker();
+
 }

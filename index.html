@@ -1,7 +1,8 @@
 <html lang="en">
 <head>
     <title>WebPush iOS example</title>
-    <base href="https://andreinwald.github.io/webpush-ios-example/">
+    <!-- The <base> element in an HTML document specifies the base URL to use for all relative URLs contained within the document. -->
+    <!-- <base href="https://andreinwald.github.io/webpush-ios-example/"> -->
     <link rel="manifest" href="manifest.json"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -10,7 +11,7 @@
     <style>
         body {background-color: #cfc7e2;font-family: Arial, sans-serif;font-size: 18px;padding-bottom: 50px;}
         .wrapper {max-width: 800px;margin: 0 auto;}
-        @supports (-webkit-touch-callout: none) {#scan-qr-code {display: none;}}
+        /* @supports (-webkit-touch-callout: none) {#scan-qr-code {display: none;}} */
         #add-to-home-screen {display: none;background-color: bisque;padding: 10px;}
         #add-to-home-screen img {display: block;margin: 0 auto;padding-top: 10px;max-height: 500px;max-width: 100%}
         #scan-qr-code img {display: block;max-width: 100%}
@@ -30,18 +31,16 @@
             standalone).
             <img src="images/webpush-add-to-home-screen.jpg" alt="webpush add to some screen">
         </div>
-
+<!--
         <div id="scan-qr-code">Open this page at your iPhone/iPad:
             <img src="images/qrcode.png" alt="qrCode"><br><br>
-        </div>
+        </div> -->
 
         <button id="subscribe_btn" onclick="subscribeToPush()">Subscribe to notifications</button>
 
         <div id="active_sub"></div>
         <button id="test_send_btn" onclick="testSend()">Send test push</button>
     </div>
-
-    <a id="source_link" href="https://github.com/andreinwald/webpush-ios-example">Code of this page</a>
 </div>
 
 <script src="frontend.js"></script>
